@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "Converts arrays into objects",
   "main": "index.js",
-  "dependencies": {
-    "tape": "^2.13.1"
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "^2.13.1"
   },
