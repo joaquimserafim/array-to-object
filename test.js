@@ -1,28 +1,36 @@
-var test = require('tape');
+'use strict'
 
-var arrToObj = require('./');
+var test      = require('tape')
+var isObject  = require('is-js-object')
 
-function isObject (obj) {
-  return obj === Object(obj) && !Array.isArray(obj);
-}
+var arrToObj = require('./')
 
-test('transform an array into an object', function (t) {
-  t.plan(1);
+test('get two arrays and transform into an object', function (assert) {
+  var keys    = ['moe', 'larry', 'curly', 2014]
+  var values  = [30, 40, 50, {month: 'May', day: 17}]
+  var object  = arrToObj(keys, values)
 
-  var array = ['moe', 'larry', 'curly', 2014];
-  var values = [30, 40, 50, {month: 'May', day: 17}];
-  var object = arrToObj(array, values);
+  assert.deepEqual(isObject(object), true, 'should return a valid object!')
+  assert.end()
+})
 
-  t.ok(object, isObject(object), 'should return a valid object!');
-});
+test('get two arrays and transform into an object but the `values` array ' +
+'have few elements than the `keys` array',
+function (assert) {
+  var keys    = ['moe', 'larry', 'curly', 2014]
+  var values  = [30, 40, 50]
+  var object  = arrToObj(keys, values)
 
+  assert.deepEqual(isObject(object), true, 'should return a valid object!')
+  assert.end()
+})
 
-test('one of args is null then should fail and return null', function (t) {
-  t.plan(1);
+test('one of the arrays is null then should fail and return null',
+function (assert) {
+  var keys    = ['moe', 'larry', 'curly', 2014]
+  var values  = null
 
-  var array = ['moe', 'larry', 'curly', 2014];
-  var values = null;
-
-  var object = arrToObj(array, values);
-  t.deepEqual(object, null, 'should return `null`!');
-});
+  var object = arrToObj(keys, values)
+  assert.deepEqual(object, undefined, 'should return `undefined`!')
+  assert.end()
+})
